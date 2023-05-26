@@ -59,17 +59,17 @@ with st.container():
                     
                     if 'items' not in channel_response:
                         st.write(f"Invalid channel id: {channel_id}")
-                        st.error("Enter the correct 11-digit **channel_id**")
+                        st.error("Enter the correct **channel_id**")
                         return None
                     
                     return channel_response
                 
                 except HttpError as e:
-                    st.error('Server error (or) Check your internet connection (or) Please Try again after a few minutes', icon='🚨')
+                    st.error('Server error (or) Check your internet connection (or) Please Try again after a few minutes')
                     st.write('An error occurred: %s' % e)
                     return None
             except:
-                st.write('You have exceeded your YouTube API quota. Please try again tomorrow.')
+                st.write('You have exceeded your YouTube API quota. Please try again later.')
 
         # Function call to Get Channel data from a single channel ID 
         channel_data = get_channel_data(youtube,channel_id)
@@ -439,7 +439,7 @@ with st.container():
 st.subheader(':green[Channels Analysis ]')
 
 # Selectbox creation
-question_tosql = st.selectbox('**Select your Question**',
+Analysis_questions = st.selectbox('**Select your Question**',
 ('1. What are the names of all the videos and their corresponding channels?',
 '2. Which channels have the most number of videos, and how many videos do they have?',
 '3. What are the top 10 most viewed videos and their respective channels?',
@@ -451,7 +451,7 @@ question_tosql = st.selectbox('**Select your Question**',
 '9. What is the average duration of all videos in each channel, and what are their corresponding channel names?',
 '10. Which videos have the highest number of comments, and what are their corresponding channel names?'), key = 'collection_question')
 
-# Creat a connection to SQL
+# Creating an connection to SQL
 connect_for_question = pymysql.connect(host='localhost', user='root', password='Softwater1', db='youtube')
 cursor = connect_for_question.cursor()
 
