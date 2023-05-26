@@ -22,7 +22,7 @@ This project aims to build a data migration pipeline for retrieving and analyzin
 Once the Streamlit app is running, follow these steps:
 
 1. Enter a YouTube channel ID in the provided input field.
-2. Click the "Retrieve Channel Details" button to fetch and display the channel information.
+2. Click the "Get data and store" button to fetch the channel information.
 3. Select the channels you wish to migrate to the data warehouse.
-4. Click the "Migrate to Data Warehouse" button to initiate the migration process.
+4. Click the "To MySQL" button to initiate the migration process.
 5. Use the interactive charts and graphs in the app to explore and analyze the migrated data.
