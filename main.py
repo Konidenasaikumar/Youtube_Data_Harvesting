@@ -1,23 +1,21 @@
 #Importing libraries
 
-# [File handling libraries]
+import googleapiclient.discovery
+from googleapiclient.discovery import build
+
 import json
 import re
 
-# [MongoDB]
 import pymongo
 
-# [SQL libraries]
 import mysql.connector
 import sqlalchemy
 from sqlalchemy import create_engine
 import pymysql
 
-# [pandas, numpy]
 import pandas as pd
 import numpy as np
 
-# [Dash board libraries]
 import streamlit as st
 import plotly.express as px
 from googleapiclient.discovery import build
@@ -256,7 +254,7 @@ with st.container():
         client = pymongo.MongoClient('mongodb://localhost:27017/')
 
         # create a database or use existing one
-        mydb = client['Youtube_DB']
+        mydb = client['youtube']
 
         # create a collection
         collection = mydb['Youtube_data']
@@ -285,7 +283,7 @@ with st.container():
     client = pymongo.MongoClient("mongodb://localhost:27017/")
 
     # create a database or use existing one
-    mydb = client['Youtube_DB']
+    mydb = client['youtube']
 
     # create a collection
     collection = mydb['Youtube_data']
@@ -391,7 +389,7 @@ with st.container():
         connect.close()
 
         # Connect to the new created database
-        engine = create_engine('mysql+mysqlconnector://root:Softwater1@localhost/youtube_db', echo=False)
+        engine = create_engine('mysql+mysqlconnector://root:Softwater1@localhost/youtube', echo=False)
 
         # insert the DataFrames data to the SQL Database 
 
@@ -436,30 +434,9 @@ with st.container():
 
 
 
-# ====================================================   /     Channel Analysis zone     /   ================================================= #
+#Analysis on channels
 
-st.header(':green[Channel Data Analysis zone]')
-
-# Check available channel data
-Check_channel = st.checkbox('**Check for available channels**')
-
-if Check_channel:
-   # Create database connection
-    engine = create_engine('mysql+mysqlconnector://root:Softwater1@localhost/youtube_db', echo=False)
-    # Execute SQL query to retrieve channel names
-    query = "SELECT Channel_Name FROM channel;"
-    results = pd.read_sql(query, engine)
-    # Get channel names as a list
-    channel_names_fromsql = list(results['Channel_Name'])
-    # Create a DataFrame from the list and reset the index to start from 1
-    df_at_sql = pd.DataFrame(channel_names_fromsql, columns=['Available channel data']).reset_index(drop=True)
-    # Reset index to start from 1 instead of 0
-    df_at_sql.index += 1  
-    # Show dataframe
-    st.dataframe(df_at_sql)
-
-
-st.subheader(':violet[Channels Analysis ]')
+st.subheader(':green[Channels Analysis ]')
 
 # Selectbox creation
 question_tosql = st.selectbox('**Select your Question**',
@@ -475,7 +452,7 @@ question_tosql = st.selectbox('**Select your Question**',
 '10. Which videos have the highest number of comments, and what are their corresponding channel names?'), key = 'collection_question')
 
 # Creat a connection to SQL
-connect_for_question = pymysql.connect(host='localhost', user='root', password='Softwater1', db='youtube_db')
+connect_for_question = pymysql.connect(host='localhost', user='root', password='Softwater1', db='youtube')
 cursor = connect_for_question.cursor()
 
 # Q1
@@ -499,8 +476,8 @@ elif question_tosql == '2. Which channels have the most number of videos, and ho
 
     with col2:
         fig_vc = px.bar(df2, y='Video Count', x='Channel Name', text_auto='.2s', title="Most number of videos", )
-        fig_vc.update_traces(textfont_size=16,marker_color='#E6064A')
-        fig_vc.update_layout(title_font_color='#1308C2 ',title_font=dict(size=25))
+        fig_vc.update_traces(textfont_size=16,marker_color='#1308C2')
+        fig_vc.update_layout(title_font_color='#E6064A ',title_font=dict(size=30))
         st.plotly_chart(fig_vc,use_container_width=True)
 
 # Q3
@@ -516,8 +493,8 @@ elif question_tosql == '3. What are the top 10 most viewed videos and their resp
 
     with col2:
         fig_topvc = px.bar(df3, y='View count', x='Video Name', text_auto='.2s', title="Top 10 most viewed videos")
-        fig_topvc.update_traces(textfont_size=16,marker_color='#E6064A')
-        fig_topvc.update_layout(title_font_color='#1308C2 ',title_font=dict(size=25))
+        fig_topvc.update_traces(textfont_size=16,marker_color='#1308C2')
+        fig_topvc.update_layout(title_font_color='#E6064A ',title_font=dict(size=25))
         st.plotly_chart(fig_topvc,use_container_width=True)
 
 # Q4 
@@ -586,5 +563,5 @@ elif question_tosql == '10. Which videos have the highest number of comments, an
     df10.index += 1
     st.dataframe(df10)
 
-# SQL DB connection close
+# Closing DB connection
 connect_for_question.close()
