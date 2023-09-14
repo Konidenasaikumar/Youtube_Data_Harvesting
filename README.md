@@ -12,7 +12,7 @@ This project aims to build a data migration pipeline for retrieving and analyzin
 
 4. Migrate data to a SQL data warehouse: As we collect data for multiple channels, we will migrate it to a SQL data warehouse. MySQL or PostgreSQL, among other SQL databases, can be used for this purpose, providing a structured and query-friendly environment.
 
-5. Query the SQL data warehouse: SQL queries will be employed to join the tables in the SQL data warehouse and retrieve data for specific channels based on user input. Libraries such as SQLAlchemy in Python can be utilized to interact with the SQL database efficiently.
+5. Query the SQL data warehouse: SQL queries will be employed to join the tables in the SQL data warehouse and retrieve data for specific channels based on user input. Libraries such as SQLAlchemy in Python can be utilized to interact with the SQL database.
 
 6. Display data in the Streamlit app: The final step involves displaying the retrieved data in the Streamlit app. Streamlit's built-in data visualization features will enable us to create charts and graphs, aiding users in analyzing the data effectively.
 
